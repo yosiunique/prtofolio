@@ -1,18 +1,30 @@
 .skills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 4rem 2rem;
-  background-color: #fff;
+  background-color: #f8f9fa;
+  margin: 0 auto;
+  max-width: 1200px;
   text-align: center;
+  animation: fadeIn 1s ease-in;
 }
 
-.skills-header h2 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.skills-header p {
-  font-size: 1rem;
-  color: #666;
+.skills-header {
   margin-bottom: 2rem;
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #007bff;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+  }
 }
 
 .skills-groups {
@@ -20,19 +32,30 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 3rem;
+  width: 100%;
 }
 
 .skill-group {
-  max-width: 280px;
+  max-width: 300px;
   text-align: left;
-}
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-.skill-group h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: #007bff;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 0.3rem;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.3rem;
+  }
 }
 
 .skill-cards {
@@ -47,12 +70,47 @@
   border-radius: 20px;
   font-weight: 600;
   color: #333;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.05);
   user-select: none;
   cursor: default;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #d6e8ff;
+    transform: scale(1.05);
+  }
 }
 
-.skill-card:hover {
-  background-color: #e0ebff;
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive layout
+@media (max-width: 768px) {
+  .skills-groups {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .skill-group {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .skills-header h2 {
+    font-size: 2rem;
+  }
+
+  .skills-header p {
+    font-size: 1rem;
+  }
 }

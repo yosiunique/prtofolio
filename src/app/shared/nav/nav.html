@@ -1,15 +1,24 @@
-<nav class="navbar">
-  <div class="logo">
-    <a routerLink="/">YG</a>
-  </div>
-  <div class="nav-links">
-    <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="/about" routerLinkActive="active-link">About</a>
-    <a routerLink="/skills" routerLinkActive="active-link">Skills</a>
-    <a routerLink="/projects" routerLinkActive="active-link">Projects</a>
-    <a routerLink="/experience" routerLinkActive="active-link">Experience</a>
-    <a routerLink="/contact" routerLinkActive="active-link">Contact</a>
-    <a routerLink="/ebackground" routerLinkActive="active-link">Educationalbackgorund</a>
-  </div>
+<!-- nav.component.html -->
+<header class="navbar">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <a class="navbar-logo" routerLink="/">YG</a>
+
+    <!-- Hamburger Menu Button (Mobile) -->
+    <button class="menu-toggle" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      &#9776;
+    </button>
+
+    <!-- Navigation Links -->
+    <nav class="nav-links" [class.open]="isMenuOpen">
+  <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
+  <a routerLink="/protofolio/about" routerLinkActive="active-link" (click)="closeMenu()">About</a>
+  <a routerLink="/protofolio/skills" routerLinkActive="active-link" (click)="closeMenu()">Skills</a>
+  <a routerLink="/protofolio/educationalbackground" routerLinkActive="active-link" (click)="closeMenu()">Education</a>
+  <a routerLink="/protofolio/experiance" routerLinkActive="active-link" (click)="closeMenu()">Experience</a>
+  <a routerLink="/protofolio/projects" routerLinkActive="active-link" (click)="closeMenu()">Projects</a>
+  <a routerLink="/protofolio/contacts" routerLinkActive="active-link" (click)="closeMenu()">Contact</a>
 </nav>
 
+  </div>
+</header>

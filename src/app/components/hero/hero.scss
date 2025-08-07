@@ -1,3 +1,4 @@
+
 .hero {
   padding: 4rem 2rem;
   background: linear-gradient(to right, #f4f6f8, #e0e7ec);
@@ -50,19 +51,33 @@
 
 .skill-card {
   padding: 0.75rem 1.25rem;
-  background-color: #ffffff;
+  background-color:#ffffff;
   border: 1px solid #ddd;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   font-weight: 500;
   font-size: 0.95rem;
+  padding: 35px;
   color: #333;
   transition: transform 0.2s;
 }
 
 .skill-card:hover {
+  animation: skill-card 3s infinite alternate ease-in-out;
+  color: lab(2.74% 0 0);
+  background-color: #40a7b9;
   transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  
+}
+@keyframes skill-card {
+to{
+  background-attachment: fixed;
+  background-color: #e1f0e2;
+  
+}
+
+
 }
 
 .btn-primary {

@@ -13,5 +13,15 @@ import { BrowserModule } from '@angular/platform-browser';
   styleUrl: './nav.scss'
 })
 export class Nav {
+// nav.component.ts
 
+  isMenuOpen = false;
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
 }
