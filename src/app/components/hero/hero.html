@@ -1,7 +1,7 @@
 <section class="hero">
   <div class="hero-content">
-    <h1>Hi, I'm <span class="highlight">Yoseph Getachew</span></h1>
-    <h2>Full-Stack Software Developer</h2>
+    <h1>Hi, I'm <span class="highlight">{{ profile().fullName }}</span></h1>
+    <h2>{{ profile().headline }}</h2>
 
     <p class="intro">
       Passionate and results-driven developer with experience building modern, scalable web applications.
@@ -10,28 +10,20 @@
     </p>
 
     <p class="details">
-      Currently working at <strong>Enat Bank</strong> as a full-stack developer, where I contribute to the
+      Currently working at <strong>{{ profile().company }}</strong> as a full-stack developer, where I contribute to the
       design and development of secure, high-performance enterprise systems.
     </p>
 
     <div class="skills-section">
       <h3>Tech Stack</h3>
       <div class="skills-grid">
-        <div class="skill-card">Angular</div>
-        <div class="skill-card">TypeScript</div>
-        <div class="skill-card">HTML/CSS</div>
-        <div class="skill-card">Spring Boot</div>
-        <div class="skill-card">Java</div>
-        <div class="skill-card">Django</div>
-        <div class="skill-card">Python</div>
-        <div class="skill-card">REST APIs</div>
-        <div class="skill-card">PostgreSQL</div>
-        <div class="skill-card">MySQL</div>
-        <div class="skill-card">Git</div>
-        <div class="skill-card">Docker</div>
+        @for (tech of techStack; track tech) {
+          <div class="skill-card">{{ tech }}</div>
+        }
       </div>
     </div>
 
-    <a routerLink="/projects" routerLinkActive="active-link" class="btn-primary">View My Work</a>
+    <a routerLink="/projects" class="btn-primary">View My Work</a>
   </div>
 </section>
+

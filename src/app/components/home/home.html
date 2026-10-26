@@ -2,18 +2,275 @@
   <section class="hero">
     <div class="hero-content">
       <div class="hero-text">
-        <h1>Hello, I'm Yoseph 👋</h1>
-        <!-- <h2>{{counter}}</h2> -->
-        <h2>Full-Stack Developer & Tech Enthusiast</h2>
-        <p>
-        {{displayedNote}}
+        <p class="availability-pill">
+          <span class="pulse" aria-hidden="true"></span>
+          Open to new opportunities
         </p>
-        <a routerLink="/protofolio/projects"  class="cta-button" aria-label="View projects">See My Projects</a>
+
+        <p class="hero-greeting">Hello, I'm {{ profile().firstName }}</p>
+        <h1>{{ profile().headline }}</h1>
+        <p class="hero-note" aria-live="polite">{{ displayedNote() }}</p>
+
+        <div class="hero-actions">
+          <a routerLink="/projects" class="cta-button" aria-label="View projects">
+            See My Projects
+          </a>
+          <a routerLink="/contact" class="cta-button cta-button--outline" aria-label="Contact me">
+            Get in Touch
+          </a>
+        </div>
+
+        <ul class="hero-meta">
+          <li>
+            <span class="meta-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </span>
+            {{ profile().location }}
+          </li>
+          <li>
+            <span class="meta-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+                <path d="M2 22h20" />
+                <path d="M6 18v-4" />
+                <path d="M10 18v-4" />
+                <path d="M14 18v-4" />
+                <path d="M18 18v-4" />
+              </svg>
+            </span>
+            {{ profile().role }} at {{ profile().company }}
+          </li>
+        </ul>
+
+        <ul class="hero-stats">
+          <li>
+            <strong>{{ profile().yearsOfExperience }}</strong>
+            <span>Experience</span>
+          </li>
+          <li>
+            <strong>{{ projectCount() }}+</strong>
+            <span>Projects</span>
+          </li>
+          <li>
+            <strong>{{ skillCount }}+</strong>
+            <span>Technologies</span>
+          </li>
+        </ul>
+
+        <div class="hero-tools">
+          <button
+            type="button"
+            class="theme-toggle"
+            aria-label="Toggle light or dark mode"
+            [attr.aria-pressed]="isDark() ? 'true' : 'false'"
+            (click)="toggleDarkMode()">
+            <span class="theme-toggle-icon" [class.sun]="isDark()" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+              </svg>
+            </span>
+            <span class="theme-toggle-icon" [class.moon]="isDark()" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </span>
+            <span class="theme-toggle-label">{{ isDark() ? 'Light mode' : 'Dark mode' }}</span>
+          </button>
+        </div>
       </div>
 
       <div class="hero-image">
-        <img src="/IMG_6828.JPG" alt="Yoseph Profile Photo" />
+        <span class="hero-image-ring" aria-hidden="true"></span>
+        <img
+          [src]="photo()"
+          [alt]="profile().fullName + ' — profile photo'"
+          width="230"
+          height="230" />
       </div>
     </div>
   </section>
+
+  <!-- Step 01 — Experience (auto-rotating carousel, same content as the Experience page) -->
+  <section
+    class="home-block"
+    aria-labelledby="home-exp-title"
+    (mouseenter)="pauseExperienceRotation()"
+    (mouseleave)="resumeExperienceRotation()"
+    (focusin)="pauseExperienceRotation()"
+    (focusout)="resumeExperienceRotation()">
+    <header class="block-head">
+      <span class="block-step" aria-hidden="true">01</span>
+      <div class="block-titles">
+        <h2 id="home-exp-title">Experience</h2>
+        <p>Where I've worked — one role at a time, changing automatically.</p>
+      </div>
+      <a class="block-link" routerLink="/experience">
+        Full experience <span aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <div class="showcase showcase--experience" aria-live="polite" aria-atomic="true">
+      @for (item of experienceSlide(); track item.id) {
+        <article class="step-card">
+          <span class="step-marker" aria-hidden="true">{{ stepLabel(experienceIndex()) }}</span>
+
+          <div class="step-box">
+            <div class="step-head">
+              <div class="step-title">
+                <h3>{{ item.role }}</h3>
+                <h4>{{ item.company }}</h4>
+              </div>
+              <span class="step-period">{{ item.period }}</span>
+            </div>
+
+            <p class="step-summary">{{ item.summary }}</p>
+
+            <ul class="step-points">
+              @for (point of item.highlights; track point) {
+                <li>{{ point }}</li>
+              }
+            </ul>
+          </div>
+        </article>
+      } @empty {
+        <p class="showcase-empty">Experience content is being updated — please check back soon.</p>
+      }
+    </div>
+
+    @if (experiences().length > 0) {
+      <div class="showcase-controls">
+        <button
+          type="button"
+          class="showcase-arrow"
+          (click)="previousExperience()"
+          aria-label="Previous experience">
+          ‹
+        </button>
+        <div class="showcase-dots">
+          @for (item of experiences(); track item.id; let i = $index) {
+            <button
+              type="button"
+              class="showcase-dot"
+              [class.active]="i === experienceIndex()"
+              [attr.aria-current]="i === experienceIndex() ? 'true' : null"
+              [attr.aria-label]="'Show experience ' + (i + 1) + ': ' + item.company"
+              (click)="selectExperience(i)">
+            </button>
+          }
+        </div>
+        <button
+          type="button"
+          class="showcase-arrow"
+          (click)="nextExperience()"
+          aria-label="Next experience">
+          ›
+        </button>
+        <span class="showcase-count" aria-hidden="true">
+          {{ stepLabel(experienceIndex()) }} / {{ stepLabel(experiences().length - 1) }}
+        </span>
+      </div>
+    }
+  </section>
+
+  <!-- Step 02 — Projects (auto-rotating carousel, same content as the Projects page) -->
+  <section
+    class="home-block"
+    aria-labelledby="home-proj-title"
+    (mouseenter)="pauseProjectRotation()"
+    (mouseleave)="resumeProjectRotation()"
+    (focusin)="pauseProjectRotation()"
+    (focusout)="resumeProjectRotation()">
+    <header class="block-head">
+      <span class="block-step" aria-hidden="true">02</span>
+      <div class="block-titles">
+        <h2 id="home-proj-title">Projects</h2>
+        <p>Selected work — one project at a time, changing automatically.</p>
+      </div>
+      <a class="block-link" routerLink="/projects">
+        All projects <span aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <div class="showcase showcase--projects" aria-live="polite" aria-atomic="true">
+      @for (project of projectSlide(); track project.id) {
+        <article class="proj-card">
+          <div class="proj-head">
+            <span class="proj-index" aria-hidden="true">{{ stepLabel(projectIndex()) }}</span>
+            <h3>{{ project.name }}</h3>
+          </div>
+          <p>{{ project.description }}</p>
+
+          <ul class="tech-list">
+            @for (tech of project.tech; track tech) {
+              <li class="tech-chip">{{ tech }}</li>
+            }
+          </ul>
+
+          @if (project.repoUrl || project.demoUrl) {
+            <div class="proj-links">
+              @if (project.repoUrl) {
+                <a
+                  class="proj-button"
+                  [href]="project.repoUrl"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  View Code
+                </a>
+              }
+              @if (project.demoUrl) {
+                <a
+                  class="proj-button"
+                  [href]="project.demoUrl"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  Live Demo
+                </a>
+              }
+            </div>
+          }
+        </article>
+      } @empty {
+        <p class="showcase-empty">Projects are being updated — please check back soon.</p>
+      }
+    </div>
+
+    @if (projects().length > 0) {
+      <div class="showcase-controls">
+        <button
+          type="button"
+          class="showcase-arrow"
+          (click)="previousProject()"
+          aria-label="Previous project">
+          ‹
+        </button>
+        <div class="showcase-dots">
+          @for (project of projects(); track project.id; let i = $index) {
+            <button
+              type="button"
+              class="showcase-dot"
+              [class.active]="i === projectIndex()"
+              [attr.aria-current]="i === projectIndex() ? 'true' : null"
+              [attr.aria-label]="'Show project ' + (i + 1) + ': ' + project.name"
+              (click)="selectProject(i)">
+            </button>
+          }
+        </div>
+        <button
+          type="button"
+          class="showcase-arrow"
+          (click)="nextProject()"
+          aria-label="Next project">
+          ›
+        </button>
+        <span class="showcase-count" aria-hidden="true">
+          {{ stepLabel(projectIndex()) }} / {{ stepLabel(projects().length - 1) }}
+        </span>
+      </div>
+    }
+  </section>
 </div>
+

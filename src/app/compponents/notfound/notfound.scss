@@ -1,13 +1,55 @@
-div{
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    background-color: #f8f9fa;  
+.notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 4rem 1.5rem;
+  text-align: center;
+  background-color: var(--background);
 }
-h1 {
-    font-size: 2.5rem;
-    color: #343a40;
-    text-align: center;
+
+.notfound-code {
+  font-size: 6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #007bff;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+.notfound h1 {
+  font-size: 2rem;
+  color: #343a40;
+  margin: 0.75rem 0 0.5rem;
+  text-align: center;
+}
+
+.notfound-message {
+  font-size: 1.05rem;
+  color: #666;
+  max-width: 420px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.notfound-home {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 3px;
+  }
 }

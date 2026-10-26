@@ -1,23 +1,25 @@
-<section class="education">
-  <div class="education-header">
+<section class="section education">
+  <header class="section-head">
     <h2>Educational Background</h2>
-    <p>My academic qualifications and certifications.</p>
-  </div>
+    <p class="sub">My academic qualifications and certifications.</p>
+  </header>
 
   <div class="education-list">
-
-    <div class="education-item">
-      <img src="/unity.png" alt="Unity University Logo" />
-      <div class="education-details">
-        <h3>Bachelor of Science in Computer Science</h3>
-        <h4>Unity University</h4>
-        <div class="duration-group">
-          <span class="duration"><strong>From:</strong> 2019</span>
-          <span class="duration"><strong>To:</strong> 2019</span>
+    @for (item of education(); track item.id) {
+      <article class="education-item">
+        <div class="education-logo">
+          <img [src]="item.logo" [alt]="item.school + ' logo'" />
         </div>
-        <p>Graduated with honors, focused on software development and algorithms.</p>
-      </div>
-    </div>
-
+        <div class="education-details">
+          <h3>{{ item.degree }}</h3>
+          <h4>{{ item.school }}</h4>
+          <div class="duration-group">
+            <span class="duration">🗓 {{ item.period }}</span>
+          </div>
+          <p>{{ item.summary }}</p>
+        </div>
+      </article>
+    }
   </div>
 </section>
+

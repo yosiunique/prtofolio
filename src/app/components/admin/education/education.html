@@ -1,0 +1,90 @@
+<div class="crud">
+  <div class="crud-toolbar">
+    <div>
+      <h2>Education</h2>
+      <p class="muted-note">
+        Create, edit or delete qualifications. Changes appear instantly on the education page.
+      </p>
+    </div>
+    <button type="button" class="btn btn--primary" (click)="startCreate()">＋ Add qualification</button>
+  </div>
+
+  @if (status()) {
+    <p class="status-banner" role="status">{{ status() }}</p>
+  }
+
+  @if (showForm()) {
+    <form class="crud-form" (ngSubmit)="save()">
+      <h3>{{ isEditing ? 'Edit qualification' : 'New qualification' }}</h3>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Degree / certificate *</span>
+          <input name="degree" [(ngModel)]="form.degree" />
+        </label>
+        <label class="field">
+          <span>Institution *</span>
+          <input name="school" [(ngModel)]="form.school" />
+        </label>
+        <label class="field">
+          <span>Period *</span>
+          <input name="period" [(ngModel)]="form.period" placeholder="2019 – 2023" />
+        </label>
+        <label class="field">
+          <span>Logo URL</span>
+          <input name="logo" [(ngModel)]="form.logo" placeholder="/unity.png" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Summary</span>
+        <textarea name="summary" rows="3" [(ngModel)]="form.summary"></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn--primary"
+          [disabled]="!form.degree.trim() || !form.school.trim() || !form.period.trim()">
+          Save
+        </button>
+        <button type="button" class="btn btn--ghost" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  }
+
+  <div class="crud-list">
+    @for (item of items(); track item.id) {
+      <article class="crud-row">
+        <div class="crud-row-main">
+          <strong>{{ item.degree }}</strong>
+          <span class="chip">{{ item.school }}</span>
+          <span class="chip chip--muted">{{ item.period }}</span>
+          <p>{{ item.summary }}</p>
+        </div>
+        <div class="crud-row-actions">
+          @if (pendingDelete() === item.id) {
+            <span class="chip chip--muted">Delete this entry?</span>
+            <button type="button" class="btn btn--danger" (click)="confirmDelete(item.id)">
+              Yes, delete
+            </button>
+            <button type="button" class="btn btn--ghost" (click)="cancelDelete()">Cancel</button>
+          } @else {
+            <button type="button" class="btn btn--ghost" (click)="startEdit(item)">Edit</button>
+            <button
+              type="button"
+              class="btn btn--danger-ghost"
+              (click)="requestDelete(item.id)">
+              Delete
+            </button>
+          }
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-state">
+        <span aria-hidden="true">🎓</span>
+        <p>No education entries yet. Click “Add qualification” to create your first one.</p>
+      </div>
+    }
+  </div>
+</div>

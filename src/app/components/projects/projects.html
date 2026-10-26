@@ -1,53 +1,62 @@
-<section class="projects">
-  <div class="projects-header">
+<section class="section projects">
+  <header class="section-head">
     <h2>Projects</h2>
-    <p>Here are some of the key projects I’ve worked on recently.</p>
-  </div>
+    <p class="sub">Real production systems I've designed and built — each one documented as an engineering case study.</p>
+  </header>
 
   <div class="projects-grid">
-    <div class="project-card">
-      <h3>smsServiceApi</h3>
-      <p>
-        A backend microservice for sending and managing SMS notifications,
-        designed for scalable enterprise communication.
-      </p>
-      <p class="tech-used">Spring Boot, Twilio API, PostgreSQL</p>
-    </div>
+    @for (project of projects(); track project.id) {
+      <article class="project-card">
+        <div class="project-card-meta">
+          @if (project.type) {
+            <span class="project-type">{{ project.type }}</span>
+          }
+          @if (project.visibility === 'sanitized') {
+            <span class="project-badge project-badge--sanitized" title="Client-identifying details have been removed">Sanitized</span>
+          }
+        </div>
 
-    <div class="project-card">
-      <h3>FingerPrintsAttendance</h3>
-      <p>
-        Biometric-based attendance system using fingerprint recognition to track
-        employee/student presence in real-time.
-      </p>
-      <p class="tech-used">Java, Spring Boot, DigitalPersona SDK, MySQL</p>
-    </div>
+        <h3>{{ project.name }}</h3>
 
-    <div class="project-card">
-      <h3>e-Teacher Platform</h3>
-      <p>
-        An interactive e-learning system that connects teachers and students with file uploads,
-        virtual classrooms, and quiz modules.
-      </p>
-      <p class="tech-used">Angular, Django, PostgreSQL</p>
-    </div>
+        @if (project.role || project.period) {
+          <p class="project-role">
+            {{ project.role }}@if (project.period) { · {{ project.period }}}
+          </p>
+        }
 
-    <div class="project-card">
-      <h3>School Payments</h3>
-      <p>
-        A digital payment management system for schools, supporting fee tracking,
-        reporting, and integrations with banks.
-      </p>
-      <p class="tech-used">Spring Boot, Angular, Enat Bank API, MySQL</p>
-    </div>
+        <p>{{ project.description }}</p>
 
-    <div class="project-card">
-      <h3>Resource Handle</h3>
-      <p>
-        A resource and asset management tool to allocate, track, and monitor
-        hardware/software resources within organizations.
-      </p>
-      <p class="tech-used">Django, Angular, Docker, REST API</p>
-    </div>
+        <ul class="tech-list">
+          @for (tech of project.tech; track tech) {
+            <li class="tech-chip">{{ tech }}</li>
+          }
+        </ul>
+
+        <div class="project-links">
+          <a class="project-button" [routerLink]="['/projects', slugOf(project)]">
+            Read case study <span aria-hidden="true">&rarr;</span>
+          </a>
+          @if (project.repoUrl) {
+            <a
+              class="project-button project-button--ghost"
+              [href]="project.repoUrl"
+              target="_blank"
+              rel="noopener noreferrer">
+              View Code
+            </a>
+          }
+          @if (project.demoUrl) {
+            <a
+              class="project-button project-button--ghost"
+              [href]="project.demoUrl"
+              target="_blank"
+              rel="noopener noreferrer">
+              Live Demo
+            </a>
+          }
+        </div>
+      </article>
+    }
   </div>
 </section>
+

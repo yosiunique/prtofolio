@@ -1,41 +1,23 @@
-<section class="skills">
-  <div class="skills-header">
+<section class="section skills">
+  <header class="section-head">
     <h2>Skills</h2>
-    <p>Technologies and tools I use to build efficient, scalable applications.</p>
-  </div>
+    <p class="sub">Technologies and tools I use to build efficient, scalable applications.</p>
+  </header>
 
   <div class="skills-groups">
-
-    <div class="skill-group">
-      <h3>Frontend</h3>
-      <div class="skill-cards">
-        <div class="skill-card">Angular</div>
-        <div class="skill-card">TypeScript</div>
-        <div class="skill-card">HTML5 & CSS3</div>
-        <div class="skill-card">JavaScript (ES6+)</div>
+    @for (group of skillGroups; track group.title) {
+      <div class="skill-group">
+        <h3>{{ group.title }}</h3>
+        <div class="skill-cards">
+          @for (skill of group.skills; track skill) {
+            <div class="skill-card">
+              <span class="skill-dot" aria-hidden="true"></span>
+              {{ skill }}
+            </div>
+          }
+        </div>
       </div>
-    </div>
-
-    <div class="skill-group">
-      <h3>Backend</h3>
-      <div class="skill-cards">
-        <div class="skill-card">Spring Boot</div>
-        <div class="skill-card">Java</div>
-        <div class="skill-card">Django</div>
-        <div class="skill-card">Python</div>
-        <div class="skill-card">REST APIs</div>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <h3>Databases & Tools</h3>
-      <div class="skill-cards">
-        <div class="skill-card">PostgreSQL</div>
-        <div class="skill-card">MySQL</div>
-        <div class="skill-card">Git</div>
-        <div class="skill-card">Docker</div>
-      </div>
-    </div>
-
+    }
   </div>
 </section>
+

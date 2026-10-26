@@ -1,0 +1,74 @@
+<div class="admin-messages">
+  <div class="messages-toolbar">
+    <div class="toolbar-info">
+      <h2>Client conversation</h2>
+      <p>
+        {{ messages().length }} message{{ messages().length === 1 ? '' : 's' }}
+        @if (unreadCount() > 0) {
+          <span class="unread-chip">{{ unreadCount() }} unread</span>
+        }
+      </p>
+    </div>
+
+    <div class="toolbar-actions">
+      @if (unreadCount() > 0) {
+        <button type="button" class="tool-button" (click)="markAllRead()">
+          Mark all read
+        </button>
+      }
+      @if (messages().length > 0) {
+        <button type="button" class="tool-button tool-button--danger" (click)="clearAll()">
+          Clear conversation
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (status()) {
+    <p class="status-banner" role="status">{{ status() }}</p>
+  }
+
+  <div class="thread">
+    @if (messages().length === 0) {
+      <div class="empty-state">
+        <span aria-hidden="true">💬</span>
+        <p>No messages yet. Visitors can reach you from the chat button on your site.</p>
+      </div>
+    } @else {
+      @for (message of messages(); track message.id) {
+        <article
+          class="message"
+          [class.message--visitor]="isVisitor(message)"
+          [class.message--owner]="!isVisitor(message)"
+          [class.message--unread]="!message.read && isVisitor(message)">
+          <header class="message-head">
+            <strong>{{ message.name }}</strong>
+            @if (!isVisitor(message)) {
+              <span class="owner-tag">You</span>
+            }
+            <time [attr.datetime]="message.sentAt">{{ message.sentAt | date: 'MMM d, y · h:mm a' }}</time>
+          </header>
+          <p class="message-text">{{ message.text }}</p>
+        </article>
+      }
+    }
+  </div>
+
+  <form class="reply-box" (ngSubmit)="sendReply()">
+    <label class="visually-hidden" for="admin-reply">Reply message</label>
+    <input
+      id="admin-reply"
+      type="text"
+      name="reply"
+      [(ngModel)]="replyDraft"
+      placeholder="Type your reply to the visitor…" />
+    <button type="submit" class="send-button" [disabled]="!replyDraft.trim()">
+      Send reply
+    </button>
+  </form>
+
+  <p class="storage-note">
+    Stored via <code>ChatService</code> (localStorage mock database). Swap the
+    persistence layer for your API/DB later — no UI changes required.
+  </p>
+</div>

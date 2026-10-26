@@ -1,0 +1,142 @@
+@if (project(); as p) {
+  <article class="section case-study">
+    <a class="back-link" routerLink="/projects">&larr; All projects</a>
+
+    <!-- Header -->
+    <header class="case-head">
+      <div class="case-badges">
+        @if (p.type) {
+          <span class="case-badge case-badge--type">{{ p.type }}</span>
+        }
+        @if (p.visibility === 'sanitized') {
+          <span class="case-badge case-badge--sanitized">Sanitized case study</span>
+        }
+      </div>
+
+      <h1>{{ p.name }}</h1>
+      @if (p.description) {
+        <p class="case-lede">{{ p.description }}</p>
+      }
+
+      <dl class="case-meta">
+        @if (p.role) {
+          <div><dt>Role</dt><dd>{{ p.role }}</dd></div>
+        }
+        @if (p.period) {
+          <div><dt>Period</dt><dd>{{ p.period }}</dd></div>
+        }
+        @if (p.orgType) {
+          <div><dt>Organization</dt><dd>{{ p.orgType }}</dd></div>
+        }
+      </dl>
+
+      @if (p.visibility === 'sanitized') {
+        <p class="case-note">
+          Client-identifying information, internal URLs and infrastructure
+          details are intentionally withheld from this case study.
+        </p>
+      }
+    </header>
+
+    @if (p.screenshot) {
+      <figure class="case-screenshot">
+        <img [src]="p.screenshot" [alt]="p.name + ' — sanitized screenshot'" />
+      </figure>
+    }
+
+    <!-- Body sections -->
+    @if (has(p.problem)) {
+      <section class="case-section">
+        <h2>Problem</h2>
+        <p>{{ p.problem }}</p>
+      </section>
+    }
+
+    @if (has(p.solution)) {
+      <section class="case-section">
+        <h2>Solution</h2>
+        <p>{{ p.solution }}</p>
+      </section>
+    }
+
+    @if (has(p.contribution)) {
+      <section class="case-section">
+        <h2>My contribution</h2>
+        <p>{{ p.contribution }}</p>
+      </section>
+    }
+
+    @if (has(p.features)) {
+      <section class="case-section">
+        <h2>Key features</h2>
+        <ul class="case-list">
+          @for (feature of p.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+      </section>
+    }
+
+    @if (has(p.architecture)) {
+      <section class="case-section">
+        <h2>Architecture</h2>
+        <p>{{ p.architecture }}</p>
+      </section>
+    }
+
+    @if (has(p.challenges)) {
+      <section class="case-section">
+        <h2>Challenges</h2>
+        <ul class="case-list">
+          @for (challenge of p.challenges; track challenge) {
+            <li>{{ challenge }}</li>
+          }
+        </ul>
+      </section>
+    }
+
+    @if (has(p.results)) {
+      <section class="case-section">
+        <h2>Result</h2>
+        <ul class="case-list case-list--results">
+          @for (result of p.results; track result) {
+            <li>{{ result }}</li>
+          }
+        </ul>
+      </section>
+    }
+
+    <!-- Technologies -->
+    <section class="case-section">
+      <h2>Technologies</h2>
+      <ul class="tech-list">
+        @for (tech of p.tech; track tech) {
+          <li class="tech-chip">{{ tech }}</li>
+        }
+      </ul>
+    </section>
+
+    <!-- Links -->
+    @if (p.repoUrl || p.demoUrl) {
+      <div class="case-links">
+        @if (p.repoUrl) {
+          <a class="case-button case-button--primary" [href]="p.repoUrl" target="_blank" rel="noopener noreferrer">
+            View Code
+          </a>
+        }
+        @if (p.demoUrl) {
+          <a class="case-button" [href]="p.demoUrl" target="_blank" rel="noopener noreferrer">
+            Live Demo
+          </a>
+        }
+      </div>
+    }
+  </article>
+} @else {
+  <!-- Empty / not-found state -->
+  <section class="section case-study case-study--missing">
+    <h1>Project not found</h1>
+    <p>This case study doesn't exist (yet). It may have been renamed or removed.</p>
+    <a class="case-button case-button--primary" routerLink="/projects">Back to projects</a>
+  </section>
+}

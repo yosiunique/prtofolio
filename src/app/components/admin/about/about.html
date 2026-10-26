@@ -1,0 +1,70 @@
+<div class="crud">
+  <div class="crud-toolbar">
+    <div>
+      <h2>About Me</h2>
+      <p class="muted-note">
+        Edit your bio and personal details. Saving updates the home hero, about page and sidebar.
+      </p>
+    </div>
+  </div>
+
+  @if (status()) {
+    <p class="status-banner" role="status">{{ status() }}</p>
+  }
+
+  <form class="crud-form" (ngSubmit)="save()">
+    <h3>Profile details</h3>
+
+    <div class="form-grid">
+      <label class="field">
+        <span>Full name *</span>
+        <input name="fullName" [(ngModel)]="form.fullName" />
+      </label>
+      <label class="field">
+        <span>Headline *</span>
+        <input name="headline" [(ngModel)]="form.headline" placeholder="Full-Stack Developer" />
+      </label>
+      <label class="field">
+        <span>Role</span>
+        <input name="role" [(ngModel)]="form.role" />
+      </label>
+      <label class="field">
+        <span>Company</span>
+        <input name="company" [(ngModel)]="form.company" />
+      </label>
+      <label class="field">
+        <span>Location</span>
+        <input name="location" [(ngModel)]="form.location" />
+      </label>
+      <label class="field">
+        <span>Years of experience</span>
+        <input name="yearsOfExperience" [(ngModel)]="form.yearsOfExperience" placeholder="4+ years" />
+      </label>
+      <label class="field">
+        <span>Email</span>
+        <input name="email" [(ngModel)]="form.email" />
+      </label>
+      <label class="field">
+        <span>Phone</span>
+        <input name="phone" [(ngModel)]="form.phone" />
+      </label>
+    </div>
+
+    <label class="field">
+      <span>Bio — one paragraph per line</span>
+      <textarea name="bio" rows="6" [(ngModel)]="form.bioText"></textarea>
+    </label>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn--primary"
+        [disabled]="!form.fullName.trim() || !form.headline.trim()">
+        Save profile
+      </button>
+      <button type="button" class="btn btn--ghost" (click)="resetForm()">
+        Discard changes
+      </button>
+    </div>
+  </form>
+</div>

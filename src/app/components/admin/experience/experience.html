@@ -1,0 +1,98 @@
+<div class="crud">
+  <div class="crud-toolbar">
+    <div>
+      <h2>Experience</h2>
+      <p class="muted-note">
+        Create, edit or delete roles. Changes appear instantly on the home and experience pages.
+      </p>
+    </div>
+    <button type="button" class="btn btn--primary" (click)="startCreate()">＋ Add role</button>
+  </div>
+
+  @if (status()) {
+    <p class="status-banner" role="status">{{ status() }}</p>
+  }
+
+  @if (showForm()) {
+    <form class="crud-form" (ngSubmit)="save()">
+      <h3>{{ isEditing ? 'Edit experience' : 'New experience' }}</h3>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Role *</span>
+          <input name="role" [(ngModel)]="form.role" />
+        </label>
+        <label class="field">
+          <span>Company *</span>
+          <input name="company" [(ngModel)]="form.company" />
+        </label>
+        <label class="field">
+          <span>Period *</span>
+          <input name="period" [(ngModel)]="form.period" placeholder="Jan 2022 – Present" />
+        </label>
+        <label class="field">
+          <span>Location</span>
+          <input name="location" [(ngModel)]="form.location" placeholder="Addis Ababa, Ethiopia" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Summary</span>
+        <textarea name="summary" rows="3" [(ngModel)]="form.summary"></textarea>
+      </label>
+
+      <label class="field">
+        <span>Highlights — one per line</span>
+        <textarea name="highlights" rows="5" [(ngModel)]="form.highlightsText"></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn--primary"
+          [disabled]="!form.role.trim() || !form.company.trim() || !form.period.trim()">
+          Save
+        </button>
+        <button type="button" class="btn btn--ghost" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  }
+
+  <div class="crud-list">
+    @for (item of items(); track item.id) {
+      <article class="crud-row">
+        <div class="crud-row-main">
+          <strong>{{ item.role }}</strong>
+          <span class="chip">{{ item.company }}</span>
+          <span class="chip chip--muted">{{ item.period }}</span>
+          @if (item.location) {
+            <span class="chip chip--muted">📍 {{ item.location }}</span>
+          }
+          <p>{{ item.summary }}</p>
+        </div>
+        <div class="crud-row-actions">
+          @if (pendingDelete() === item.id) {
+            <span class="chip chip--muted">Delete this role?</span>
+            <button type="button" class="btn btn--danger" (click)="confirmDelete(item.id)">
+              Yes, delete
+            </button>
+            <button type="button" class="btn btn--ghost" (click)="cancelDelete()">Cancel</button>
+          } @else {
+            <button type="button" class="btn btn--ghost" (click)="startEdit(item)">Edit</button>
+            <button
+              type="button"
+              class="btn btn--danger-ghost"
+              (click)="requestDelete(item.id)">
+              Delete
+            </button>
+          }
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-state">
+        <span aria-hidden="true">💼</span>
+        <p>No experience entries yet. Click “Add role” to create your first one.</p>
+      </div>
+    }
+  </div>
+</div>

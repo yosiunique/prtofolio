@@ -1,0 +1,59 @@
+<div class="crud">
+  <div class="crud-toolbar">
+    <div>
+      <h2>Contact</h2>
+      <p class="muted-note">
+        Edit the contact details shown on the contact page. Saving updates the cards and links instantly.
+      </p>
+    </div>
+  </div>
+
+  @if (status()) {
+    <p class="status-banner" role="status">{{ status() }}</p>
+  }
+
+  <form class="crud-form" (ngSubmit)="save()">
+    <h3>Contact details</h3>
+
+    <label class="field">
+      <span>Intro message</span>
+      <textarea name="intro" rows="3" [(ngModel)]="form.intro"></textarea>
+    </label>
+
+    <div class="form-grid">
+      <label class="field">
+        <span>Email *</span>
+        <input name="email" [(ngModel)]="form.email" />
+      </label>
+      <label class="field">
+        <span>Phone</span>
+        <input name="phone" [(ngModel)]="form.phone" />
+      </label>
+      <label class="field">
+        <span>Location</span>
+        <input name="location" [(ngModel)]="form.location" />
+      </label>
+      <label class="field">
+        <span>Availability</span>
+        <input name="availability" [(ngModel)]="form.availability" />
+      </label>
+      <label class="field">
+        <span>LinkedIn URL</span>
+        <input name="linkedin" [(ngModel)]="form.linkedin" placeholder="https://linkedin.com/in/…" />
+      </label>
+      <label class="field">
+        <span>GitHub URL</span>
+        <input name="github" [(ngModel)]="form.github" placeholder="https://github.com/…" />
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn--primary" [disabled]="!form.email.trim()">
+        Save contact details
+      </button>
+      <button type="button" class="btn btn--ghost" (click)="resetForm()">
+        Discard changes
+      </button>
+    </div>
+  </form>
+</div>

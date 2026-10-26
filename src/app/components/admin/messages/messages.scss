@@ -1,0 +1,231 @@
+.admin-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.messages-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-info {
+  h2 {
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.unread-chip {
+  padding: 0.1rem 0.55rem;
+  background: rgba(255, 111, 97, 0.14);
+  border: 1px solid rgba(255, 111, 97, 0.5);
+  border-radius: 999px;
+  color: var(--highlight-dark, #e85a4d);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tool-button {
+  padding: 0.45rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  &--danger:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+  }
+}
+
+.status-banner {
+  padding: 0.7rem 1rem;
+  background: rgba(46, 204, 113, 0.12);
+  border: 1px solid rgba(46, 204, 113, 0.45);
+  border-radius: 10px;
+  color: #1e8449;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-height: 440px;
+  overflow-y: auto;
+  padding: 0.4rem;
+  background: var(--bg-soft, #f6f8fb);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+
+  span {
+    font-size: 1.8rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 0.93rem;
+    max-width: 420px;
+  }
+}
+
+.message {
+  max-width: 78%;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+
+  &--visitor {
+    align-self: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top-left-radius: 4px;
+  }
+
+  &--owner {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    border-top-right-radius: 4px;
+  }
+
+  &--unread {
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 0 2px rgba(255, 111, 97, 0.3);
+  }
+}
+
+.message-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  margin-bottom: 0.3rem;
+
+  strong {
+    font-size: 0.85rem;
+  }
+
+  time {
+    opacity: 0.7;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+}
+
+.owner-tag {
+  padding: 0.05rem 0.45rem;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.message-text {
+  font-size: 0.93rem;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.reply-box {
+  display: flex;
+  gap: 0.6rem;
+
+  input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+
+    &:focus {
+      outline: 2px solid rgba(0, 123, 255, 0.35);
+      border-color: var(--primary-color);
+    }
+  }
+}
+
+.send-button {
+  padding: 0.7rem 1.3rem;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--primary-dark);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.storage-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.55;
+
+  code {
+    background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    color: var(--primary-dark);
+  }
+}
+
+@media (max-width: 600px) {
+  .message {
+    max-width: 92%;
+  }
+
+  .reply-box {
+    flex-direction: column;
+  }
+}

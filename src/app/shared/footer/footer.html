@@ -1,13 +1,45 @@
 <!-- footer.component.html -->
 <footer class="footer">
   <div class="footer-container">
-    <p>&copy; {{ currentYear }} Yoseph. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="https://github.com/yosiunique" target="_blank" rel="noopener">GitHub</a>
-      <span>|</span>
-      <a href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noopener">LinkedIn</a>
-      <span>|</span>
-      <a href="mailto:you@example.com">Email</a>
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a class="footer-logo" routerLink="/" aria-label="Back to home">{{ brand.initials }}</a>
+        <p class="footer-title">{{ brand.name }}</p>
+        <p class="footer-tagline">{{ tagline }}</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <nav class="footer-links">
+          @for (link of quickLinks; track link.path) {
+            <a [routerLink]="link.path">{{ link.label }}</a>
+          }
+        </nav>
+      </div>
+
+      <!-- Social -->
+      <div class="footer-column">
+        <h3>Connect</h3>
+        <nav class="footer-links">
+          @for (social of socialLinks; track social.url) {
+            <a
+              [href]="social.url"
+              [target]="isExternal(social.url) ? '_blank' : null"
+              [rel]="isExternal(social.url) ? 'noopener noreferrer' : null">
+              {{ social.label }}
+            </a>
+          }
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} {{ rights }}</p>
+      <button type="button" class="back-to-top" (click)="scrollToTop()">
+        Back to top <span aria-hidden="true">&uarr;</span>
+      </button>
     </div>
   </div>
 </footer>

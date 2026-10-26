@@ -1,6 +1,6 @@
 .about {
   padding: 4rem 2rem;
-  background-color: #f4f6f8;
+  background-color: var(--background);
   text-align: center;
   max-width: 900px;
   margin: 3rem auto;
@@ -24,7 +24,7 @@
 .about-content h2 {
   font-size: 2.5rem;
   margin-bottom: 1.2rem;
-  color: #007bff;
+  color: var(--primary);
   font-weight: 700;
   position: relative;
 }
@@ -34,14 +34,14 @@
   display: block;
   width: 60px;
   height: 3px;
-  background: #007bff;
+  background: var(--primary);
   margin: 0.5rem auto 1.5rem auto;
   border-radius: 2px;
 }
 
 .about-content p {
   font-size: 1.125rem;
-  color: #333;
+  color: var(--text);
   margin-bottom: 1.5rem;
   line-height: 1.75;
   max-width: 700px;
@@ -52,11 +52,13 @@
   width: 300px;
   height: 300px;
   border-radius: 50%;
+  // Show the full face — anchor the crop to the top of the photo.
   object-fit: cover;
+  object-position: center 15%;
   margin-bottom: 1.5rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   border: 5px solid transparent;
-  background: linear-gradient(#fff, #fff) padding-box,
+  background: linear-gradient(var(--surface), var(--surface)) padding-box,
               linear-gradient(135deg, #007bff, #00c6ff) border-box;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 
@@ -66,6 +68,43 @@
   }
 }
 
+
+.about-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  max-width: 700px;
+  margin: 2rem auto 0;
+
+  .fact {
+    background-color: var(--surface);
+    border: 1px solid #e6ebf1;
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .fact-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+  }
+
+  .fact-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+}
 
 // Animations
 @keyframes fadeIn {

@@ -1,0 +1,74 @@
+<div class="admin-images">
+  @if (status()) {
+    <p class="status-banner" role="status">{{ status() }}</p>
+  }
+
+  <!-- Profile photo + upload -->
+  <section class="image-panel">
+    <h2>Profile photo</h2>
+    <div class="profile-row">
+      <img class="profile-preview" [src]="profilePhoto()" alt="Current profile photo" />
+
+      <div class="profile-controls">
+        <p class="hint">
+          This photo is shown in the sidebar, the home hero and the about page.
+          Upload a new one or reset to the default.
+        </p>
+
+        <div class="upload-row">
+          <label class="upload-button">
+            📤 Upload new image
+            <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox" [(ngModel)]="setAsProfileAfterUpload" />
+            Also set as profile photo
+          </label>
+        </div>
+
+        @if (profilePhoto() !== defaultPhotoUrl) {
+          <button type="button" class="reset-button" (click)="resetProfile()">
+            Reset to default photo
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="image-panel">
+    <h2>Gallery <span class="count">{{ gallery().length }}</span></h2>
+
+    @if (gallery().length === 0) {
+      <div class="empty-state">
+        <span aria-hidden="true">🖼️</span>
+        <p>No images uploaded yet. Use the upload button above to add images to your portfolio.</p>
+      </div>
+    } @else {
+      <div class="gallery-grid">
+        @for (image of gallery(); track image.id) {
+          <figure class="gallery-item" [class.is-profile]="image.url === profilePhoto()">
+            <img [src]="image.url" [alt]="image.name" />
+            <figcaption>
+              <span class="gallery-name" [title]="image.name">{{ image.name }}</span>
+              <span class="gallery-date">{{ image.addedAt | date: 'MMM d, y' }}</span>
+            </figcaption>
+            <div class="gallery-actions">
+              @if (image.url !== profilePhoto()) {
+                <button type="button" class="btn btn--primary" (click)="useAsProfile(image.url)">
+                  Use as profile
+                </button>
+              } @else {
+                <span class="profile-tag">Current profile</span>
+              }
+              <button type="button" class="btn btn--danger" (click)="removeImage(image.id)">
+                Delete
+              </button>
+            </div>
+          </figure>
+        }
+      </div>
+    }
+  </section>
+</div>

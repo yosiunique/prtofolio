@@ -1,51 +1,186 @@
 .contact {
-  padding: 4rem 2rem;
-  background-color: #fff;
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  background: transparent;
 }
 
-.contact-content h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #007bff;
+/* Two-column layout : channels on the left, CTA panel on the right */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
 }
 
-.contact-content p {
-  font-size: 1rem;
-  color: #444;
-  margin-bottom: 1rem;
+@media (max-width: 860px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
-.contact-info p {
-  margin: 0.4rem 0;
+/* --- Channel rows (email, phone, location, availability) --- */
+
+.contact-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+.channel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  color: var(--primary);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.channel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.channel-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.channel-value {
+  font-size: 0.98rem;
   font-weight: 600;
+  color: var(--text);
+  word-break: break-word;
 }
 
-.contact-info a {
-  color: #007bff;
+/* --- Availability dot --- */
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--success);
+  box-shadow: 0 0 0 4px rgba(47, 158, 68, 0.18);
+}
+
+.channel--status .channel-icon {
+  background-color: transparent;
+  border: none;
+}
+
+/* --- Social buttons --- */
+
+.channel-socials {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.social-button {
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--primary);
   text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background-color: var(--primary);
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
 }
 
-.contact-info a:hover {
-  text-decoration: underline;
+/* --- CTA panel (dark navy section) --- */
+
+.contact-cta {
+  padding: 1.75rem;
+  background-color: var(--navy);
+  color: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+
+  h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+    color: #fff;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
 }
 
-.btn-primary {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #007bff;
-  color: white;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s;
+.cta-button {
   display: inline-block;
+  padding: 0.8rem 1.6rem;
+  background-color: var(--primary);
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
+.cta-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.25rem 0 0 !important;
+  margin-bottom: 0 !important;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.85) !important;
 }

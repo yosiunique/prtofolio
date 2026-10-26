@@ -1,0 +1,28 @@
+/**
+ * Skip link — visually hidden until a keyboard user focuses it,
+ * then drops down over the top of the page.
+ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 2000;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--navy, #101f30);
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: top 0.2s ease;
+
+  &:focus {
+    top: 0;
+    outline: 2px solid var(--accent, #ff6f61);
+    outline-offset: 2px;
+  }
+}
+
+.main-content:focus {
+  outline: none;
+}

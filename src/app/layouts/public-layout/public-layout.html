@@ -1,0 +1,17 @@
+<!-- Accessibility: skip link for keyboard users -->
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- Professional top navigation (public links only) -->
+<app-nav></app-nav>
+
+<!-- Page shell: keeps the footer at the bottom of the viewport -->
+<div class="page-shell">
+  <main id="main-content" class="main-content" tabindex="-1">
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer></app-footer>
+</div>
+
+<!-- Floating chat widget — visitors can message the site owner -->
+<app-chat-widget></app-chat-widget>

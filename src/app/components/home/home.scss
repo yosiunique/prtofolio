@@ -1,23 +1,22 @@
 :host {
-  --primary-color: #34495e;
-  --highlight-color: #ff6f61;
-  --text-light: #cfd8dc;
-  --background-gradient: linear-gradient(135deg, var(--primary-color), #4e637a);
+  /* The component relies entirely on the design tokens defined in :root —
+     no component-local color or spacing variables live here. */
 }
 
 .home-container {
   padding: 2rem;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
 .hero {
-  background: var(--background-gradient);
-  color: white;
-  padding: 4rem 2rem;
-  border-radius: 16px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+  color: var(--text-inverse);
+  padding: 4.5rem 2rem 4rem;
+  border-radius: var(--radius);
   animation: fadeIn 1.2s ease-in;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
   position: relative;
 }
@@ -35,67 +34,532 @@
   min-width: 280px;
   animation: slideInLeft 1s ease-out;
 
+  .availability-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.95rem;
+    margin-bottom: 0.9rem;
+    background-color: color-mix(in srgb, var(--success) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--success) 55%, transparent);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--success) 70%, #fff);
+    letter-spacing: 0.02em;
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--success);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+  }
+
+  .hero-greeting {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-inverse);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+
   h1 {
     font-size: 3.2rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 
-  h2 {
-    font-size: 1.6rem;
-    color: var(--text-light);
-    margin-bottom: 1.5rem;
-  }
-
-  p {
+  .hero-note {
     font-size: 1.15rem;
     line-height: 1.7;
     margin-bottom: 2rem;
     max-width: 600px;
+    min-height: 5.5rem; // reserve space so the rotating text doesn't shift the layout
+    color: var(--text-secondary);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .meta-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      opacity: 0.8;
+    }
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.25rem;
+    list-style: none;
+    padding: 1.4rem 0 0;
+    margin-top: 1.6rem;
+    border-top: 1px solid color-mix(in srgb, var(--text-inverse) 16%, transparent);
+
+    li {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    strong {
+      font-size: 1.5rem;
+      color: var(--text-inverse);
+    }
+
+    span {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+
+  .hero-tools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--text-inverse) 16%, transparent);
+  }
+
+  // --- Light / dark mode switch (DarkModeService drives aria-pressed) ---
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 1rem;
+    background: color-mix(in srgb, var(--text-inverse) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--text-inverse) 30%, transparent);
+    border-radius: 999px;
+    color: var(--text-inverse);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--text-inverse) 18%, transparent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .theme-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s ease;
+    }
+
+    // Light mode → show the moon (an invitation to go dark);
+    // dark mode (aria-pressed=true) → show the sun (an invitation to go light).
+    .sun { opacity: 0; }
+    .moon { opacity: 1; }
+
+    &[aria-pressed='true'] {
+      .sun { opacity: 1; }
+      .moon { opacity: 0; }
+    }
+
+    .theme-toggle-label {
+      white-space: nowrap;
+    }
   }
 
   .cta-button {
     display: inline-block;
     padding: 0.9rem 2rem;
-    background-color: var(--highlight-color);
-    color: white;
+    background-color: var(--accent);
+    color: #fff;
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
     font-size: 1rem;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(255, 111, 97, 0.4);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 40%, transparent);
 
     &:hover {
-      background-color: #ff8a80;
+      background-color: var(--accent-hover);
       transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(255, 111, 97, 0.5);
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-hover) 45%, transparent);
     }
 
     &:focus {
-      outline: 2px solid #fff;
+      outline: 2px solid var(--text-inverse);
       outline-offset: 4px;
+    }
+
+    &.cta-button--outline {
+      background-color: transparent;
+      border: 2px solid var(--text-inverse);
+      box-shadow: none;
+
+      &:hover {
+        background-color: var(--text-inverse);
+        color: var(--navy);
+        box-shadow: none;
+      }
     }
   }
 }
 
 .hero-image {
   flex-basis: 300px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   animation: slideInRight 1s ease-out;
   text-align: center;
 
-  img {
-    opacity: 50%;
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+  // Decorative rotating gradient ring behind the photo
+  .hero-image-ring {
+    position: absolute;
+    width: 264px;
+    height: 264px;
     border-radius: 50%;
-    border: 6px solid white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: conic-gradient(from 180deg, var(--accent), var(--primary), var(--accent-hover), var(--accent));
+    animation: spin 14s linear infinite;
+    opacity: 0.85;
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+    width: 230px;
+    height: 230px;
+    // Anchor the crop to the top so the face is never cut off.
+    object-fit: cover;
+    object-position: center 15%;
+    border-radius: 50%;
+    border: 6px solid var(--text-inverse);
+    background: var(--navy);
+    box-shadow: var(--shadow-md);
     transition: transform 0.4s ease;
 
     &:hover {
-      transform: scale(1.05) rotate(1deg);
+      transform: scale(1.04);
     }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Home content blocks — Experience (01) and Projects (02), cleanly separated
+// ---------------------------------------------------------------------------
+.home-block {
+  max-width: 1100px;
+  margin: 3.5rem auto 0;
+  animation: blockIn 0.6s ease both;
+}
+
+.block-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 2px solid var(--border);
+
+  .block-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .block-titles {
+    flex: 1;
+    min-width: 220px;
+
+    h2 {
+      font-size: 1.7rem;
+      color: var(--ink);
+    }
+
+    p {
+      margin-top: 0.2rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+  }
+
+  .block-link {
+    padding: 0.5rem 1.05rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--primary);
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// --- Step 01: experience timeline box (one slide inside the carousel) ---
+
+.step-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 1.1rem;
+
+  // Connecting line between the step markers
+  &::after {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 60px;
+    bottom: -1.5rem;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--navy) 45%, transparent));
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+}
+
+.step-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
+}
+
+.step-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.6rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-left-color: var(--accent);
+  }
+}
+
+// --- Step 02: project card (one slide inside the carousel) ---
+
+.proj-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem 1.4rem 1.4rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+
+  // Gradient accent sweeping across the top on hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.proj-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+
+  h3 {
+    font-size: 1.2rem;
+    color: var(--ink);
+    word-break: break-word;
+  }
+
+  .proj-index {
+    flex-shrink: 0;
+    padding: 0.18rem 0.5rem;
+    background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+    border-radius: 6px;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+  }
+}
+
+.proj-card > p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 1.1rem;
+}
+
+.tech-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: auto 0 0;
+}
+
+.tech-chip {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--surface));
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.proj-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border);
+}
+
+.proj-button {
+  padding: 0.55rem 1.1rem;
+  background: var(--primary);
+  color: #ffffff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+}
+
+// Responsive: step timeline + block headers on small screens
+@media (max-width: 640px) {
+  .step-card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 0.85rem;
+
+    &::after {
+      left: 21px;
+      top: 48px;
+    }
+  }
+
+  .step-marker {
+    width: 44px;
+    height: 44px;
+    font-size: 0.85rem;
+  }
+
+  .block-head {
+    .block-step {
+      width: 42px;
+      height: 42px;
+      font-size: 0.9rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+
+  .step-box {
+    padding: 1.2rem 1.1rem;
+  }
+}
+
+@keyframes blockIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -103,6 +567,16 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.55; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes slideInLeft {
@@ -140,10 +614,19 @@
     }
   }
 
+  .hero-stats {
+    justify-content: center;
+  }
+
   .hero-image {
+    .hero-image-ring {
+      width: 224px;
+      height: 224px;
+    }
+
     img {
-      width: 160px;
-      height: 160px;
+      width: 190px;
+      height: 190px;
     }
   }
 }
@@ -159,5 +642,132 @@
 
   .hero-text h2 {
     font-size: 1.1rem;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Auto-rotating showcases — Experience (01) and Projects (02)
+// ---------------------------------------------------------------------------
+.showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+
+  // The slide node is re-created on every index change, so this entrance
+  // animation replays automatically each time the content changes.
+  > * {
+    animation: showcaseIn 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+}
+
+// Reserve roughly the tallest slide height so the controls don't jump around.
+.showcase--experience {
+  min-height: 21rem;
+}
+
+.showcase--projects {
+  min-height: 17rem;
+}
+
+.showcase-empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.showcase-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.35rem;
+}
+
+.showcase-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--primary);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: var(--primary);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.showcase-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.showcase-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+
+  &.active {
+    background: var(--accent);
+    transform: scale(1.35);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+.showcase-count {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes showcaseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .showcase--experience,
+  .showcase--projects {
+    min-height: 0;
+  }
+}
+
+// Respect users who prefer reduced motion — keep the content changing but
+// without the entrance animation.
+@media (prefers-reduced-motion: reduce) {
+  .showcase > * {
+    animation: none;
   }
 }

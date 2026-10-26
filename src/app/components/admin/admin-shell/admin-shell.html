@@ -1,0 +1,29 @@
+<section class="section admin-shell">
+  <header class="admin-header">
+    <div class="admin-header-text">
+      <h1>Administration</h1>
+      <p>Manage your portfolio content, images and client messages.</p>
+    </div>
+    <a routerLink="/" class="admin-view-site">
+      <span aria-hidden="true">←</span> View site
+    </a>
+  </header>
+
+  <nav class="admin-tabs" aria-label="Administration sections">
+    @for (tab of tabs; track tab.path) {
+      <a
+        class="admin-tab"
+        [routerLink]="tab.path"
+        routerLinkActive="active">
+        {{ tab.label }}
+        @if (tab.showBadge && unread() > 0) {
+          <span class="admin-badge">{{ unread() }}</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <div class="admin-panel">
+    <router-outlet></router-outlet>
+  </div>
+</section>

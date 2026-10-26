@@ -1,0 +1,246 @@
+.admin-images {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.status-banner {
+  padding: 0.7rem 1rem;
+  background: rgba(46, 204, 113, 0.12);
+  border: 1px solid rgba(46, 204, 113, 0.45);
+  border-radius: 10px;
+  color: #1e8449;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.image-panel {
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 1.1rem;
+  }
+
+  .count {
+    min-width: 1.5rem;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+}
+
+.profile-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.profile-preview {
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 15%;
+  border: 4px solid #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-controls {
+  flex: 1;
+  min-width: 240px;
+
+  .hint {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 0.9rem;
+  }
+}
+
+.upload-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--primary-color);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  cursor: pointer;
+
+  input {
+    accent-color: var(--primary-color);
+  }
+}
+
+.reset-button {
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: var(--highlight-color);
+    color: var(--highlight-color);
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1rem;
+  background: var(--bg-soft, #f6f8fb);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  text-align: center;
+
+  span {
+    font-size: 1.8rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 0.93rem;
+    max-width: 420px;
+  }
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &.is-profile {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    background: var(--bg-soft, #f6f8fb);
+  }
+
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 0.75rem 0.4rem;
+  }
+
+  .gallery-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gallery-date {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+}
+
+.gallery-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0 0.75rem 0.75rem;
+}
+
+.btn {
+  padding: 0.35rem 0.7rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+
+  &--primary {
+    background: var(--primary-color);
+    color: #fff;
+  }
+
+  &--danger {
+    background: color-mix(in srgb, var(--danger) 14%, var(--surface));
+    color: var(--danger);
+    border: 1px solid color-mix(in srgb, var(--danger) 40%, var(--surface));
+  }
+}
+
+.profile-tag {
+  padding: 0.3rem 0.6rem;
+  background: rgba(0, 123, 255, 0.1);
+  border: 1px solid rgba(0, 123, 255, 0.35);
+  border-radius: 6px;
+  color: var(--primary-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+}

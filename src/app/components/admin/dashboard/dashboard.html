@@ -1,0 +1,86 @@
+<div class="admin-dashboard">
+  <div class="stat-grid">
+    <a class="stat-card stat-card--accent" routerLink="/admin/messages">
+      <span class="stat-icon" aria-hidden="true">💬</span>
+      <strong>{{ unreadCount() }}</strong>
+      <span class="stat-label">Unread messages</span>
+      <span class="stat-hint">Open inbox →</span>
+    </a>
+
+    <a class="stat-card" routerLink="/admin/messages">
+      <span class="stat-icon" aria-hidden="true">📨</span>
+      <strong>{{ totalMessages() }}</strong>
+      <span class="stat-label">Total messages</span>
+      <span class="stat-hint">View thread →</span>
+    </a>
+
+    <a class="stat-card" routerLink="/admin/images">
+      <span class="stat-icon" aria-hidden="true">🖼️</span>
+      <strong>{{ imageCount() }}</strong>
+      <span class="stat-label">Uploaded images</span>
+      <span class="stat-hint">Manage gallery →</span>
+    </a>
+
+    <a class="stat-card" routerLink="/projects">
+      <span class="stat-icon" aria-hidden="true">🚀</span>
+      <strong>{{ projectCount() }}</strong>
+      <span class="stat-label">Published projects</span>
+      <span class="stat-hint">View site →</span>
+    </a>
+  </div>
+
+  <div class="dash-columns">
+    <section class="dash-card">
+      <h2>Current profile photo</h2>
+      <div class="dash-profile">
+        <img [src]="profilePhoto()" alt="Current profile photo" />
+        <div>
+          <p>This photo appears in the sidebar, home hero and about page.</p>
+          <a routerLink="/admin/images" class="dash-button">Change photo</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="dash-card">
+      <h2>Manage content</h2>
+      <div class="dash-links">
+        <a routerLink="/admin/about">👤 About Me</a>
+        <a routerLink="/admin/experience">💼 Experience</a>
+        <a routerLink="/admin/projects">🚀 Projects</a>
+        <a routerLink="/admin/education">🎓 Education</a>
+        <a routerLink="/admin/contact">✉️ Contact</a>
+      </div>
+      <div class="dash-reset">
+        @if (pendingReset()) {
+          <p>Reset all edited content back to the original defaults?</p>
+          <div class="dash-reset-actions">
+            <button type="button" class="dash-button dash-button--danger" (click)="confirmReset()">
+              Yes, reset everything
+            </button>
+            <button type="button" class="dash-button dash-button--ghost" (click)="pendingReset.set(false)">
+              Cancel
+            </button>
+          </div>
+        } @else {
+          <button type="button" class="dash-button dash-button--ghost" (click)="pendingReset.set(true)">
+            Reset all content to defaults
+          </button>
+        }
+        @if (status()) {
+          <p class="dash-status" role="status">{{ status() }}</p>
+        }
+      </div>
+    </section>
+
+    <section class="dash-card">
+      <h2>How your data is stored</h2>
+      <p>
+        Images and messages are currently persisted to this browser
+        (<code>localStorage</code>) as a working mock database. When your real
+        backend is ready, swap the persistence layer in
+        <code>SiteAssetsService</code> and <code>ChatService</code> to your API —
+        every page updates automatically with no template changes.
+      </p>
+    </section>
+  </div>
+</div>

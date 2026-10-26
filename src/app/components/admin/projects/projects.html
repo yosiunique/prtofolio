@@ -1,0 +1,186 @@
+<div class="crud">
+  <div class="crud-toolbar">
+    <div>
+      <h2>Projects</h2>
+      <p class="muted-note">
+        Create, edit or delete projects. Changes appear instantly on the home and projects pages.
+      </p>
+    </div>
+    <button type="button" class="btn btn--primary" (click)="startCreate()">＋ Add project</button>
+  </div>
+
+  @if (status()) {
+    <p class="status-banner" role="status">{{ status() }}</p>
+  }
+
+  @if (showForm()) {
+    <form class="crud-form" (ngSubmit)="save()">
+      <h3>{{ isEditing ? 'Edit project' : 'New project' }}</h3>
+
+      <div class="form-grid">
+        <label class="field">
+          <span>Project name *</span>
+          <input name="name" [(ngModel)]="form.name" />
+        </label>
+        <label class="field">
+          <span>Repository URL</span>
+          <input name="repoUrl" [(ngModel)]="form.repoUrl" placeholder="https://github.com/…" />
+        </label>
+        <label class="field">
+          <span>Live demo URL</span>
+          <input name="demoUrl" [(ngModel)]="form.demoUrl" placeholder="https://…" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Description *</span>
+        <textarea name="description" rows="3" [(ngModel)]="form.description"></textarea>
+      </label>
+
+      <label class="field">
+        <span>Tech stack — one per line</span>
+        <textarea name="tech" rows="4" [(ngModel)]="form.techText" placeholder="Angular&#10;Spring Boot&#10;PostgreSQL"></textarea>
+      </label>
+
+      <!-- Case study (published on /projects/:slug) -->
+      <fieldset class="case-fieldset">
+        <legend>Case study <span class="muted-note">(published on the public project page)</span></legend>
+
+        <div class="form-grid">
+          <label class="field">
+            <span>Project type</span>
+            <input name="type" [(ngModel)]="form.type" placeholder="Enterprise Platform" />
+          </label>
+          <label class="field">
+            <span>Organization type</span>
+            <input name="orgType" [(ngModel)]="form.orgType" placeholder="Education &amp; banking" />
+          </label>
+          <label class="field">
+            <span>My role</span>
+            <input name="role" [(ngModel)]="form.role" placeholder="Full-Stack Software Engineer" />
+          </label>
+          <label class="field">
+            <span>Project period</span>
+            <input name="period" [(ngModel)]="form.period" placeholder="2023 – 2024" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Business problem</span>
+          <textarea name="problem" rows="3" [(ngModel)]="form.problem"></textarea>
+        </label>
+        <label class="field">
+          <span>Solution</span>
+          <textarea name="solution" rows="3" [(ngModel)]="form.solution"></textarea>
+        </label>
+        <label class="field">
+          <span>My contribution</span>
+          <textarea name="contribution" rows="3" [(ngModel)]="form.contribution"></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label class="field">
+            <span>Key features — one per line</span>
+            <textarea name="features" rows="4" [(ngModel)]="form.featuresText"></textarea>
+          </label>
+          <label class="field">
+            <span>Challenges — one per line</span>
+            <textarea name="challenges" rows="4" [(ngModel)]="form.challengesText"></textarea>
+          </label>
+          <label class="field">
+            <span>Results — one per line</span>
+            <textarea name="results" rows="4" [(ngModel)]="form.resultsText"></textarea>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Architecture</span>
+          <textarea name="architecture" rows="3" [(ngModel)]="form.architecture"></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label class="field">
+            <span>Sanitized screenshot URL (optional)</span>
+            <input name="screenshot" [(ngModel)]="form.screenshot" placeholder="https://…/demo.png" />
+          </label>
+          <label class="field">
+            <span>Visibility</span>
+            <select name="visibility" [(ngModel)]="form.visibility">
+              <option value="public">Public — safe to publish as-is</option>
+              <option value="sanitized">Sanitized — internal details removed</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-private">Private notes — admin only, NEVER published</span>
+          <textarea
+            name="internalNotes"
+            rows="2"
+            [(ngModel)]="form.internalNotes"
+            placeholder="Internal URLs, credentials, client contacts… never shown on the public site"></textarea>
+        </label>
+      </fieldset>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn--primary"
+          [disabled]="!form.name.trim() || !form.description.trim()">
+          Save
+        </button>
+        <button type="button" class="btn btn--ghost" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  }
+
+  <div class="crud-list">
+    @for (item of items(); track item.id) {
+      <article class="crud-row">
+        <div class="crud-row-main">
+          <strong>{{ item.name }}</strong>
+          @for (tech of item.tech; track tech) {
+            <span class="chip">{{ tech }}</span>
+          }
+          @if (item.repoUrl) {
+            <a
+              class="chip"
+              [href]="item.repoUrl"
+              target="_blank"
+              rel="noopener noreferrer">Code ↗</a>
+          }
+          @if (item.demoUrl) {
+            <a
+              class="chip"
+              [href]="item.demoUrl"
+              target="_blank"
+              rel="noopener noreferrer">Demo ↗</a>
+          }
+          <p>{{ item.description }}</p>
+        </div>
+        <div class="crud-row-actions">
+          @if (pendingDelete() === item.id) {
+            <span class="chip chip--muted">Delete this project?</span>
+            <button type="button" class="btn btn--danger" (click)="confirmDelete(item.id)">
+              Yes, delete
+            </button>
+            <button type="button" class="btn btn--ghost" (click)="cancelDelete()">Cancel</button>
+          } @else {
+            <button type="button" class="btn btn--ghost" (click)="startEdit(item)">Edit</button>
+            <button
+              type="button"
+              class="btn btn--danger-ghost"
+              (click)="requestDelete(item.id)">
+              Delete
+            </button>
+          }
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-state">
+        <span aria-hidden="true">🚀</span>
+        <p>No projects yet. Click “Add project” to showcase your first one.</p>
+      </div>
+    }
+  </div>
+</div>

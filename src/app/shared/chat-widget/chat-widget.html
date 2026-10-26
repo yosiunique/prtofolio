@@ -1,0 +1,73 @@
+@if (!isAdminRoute()) {
+  <div class="chat-widget">
+    <!-- Floating action button -->
+    <button
+      type="button"
+      class="chat-fab"
+      (click)="toggle()"
+      [attr.aria-expanded]="isOpen()"
+      aria-controls="chat-panel"
+      aria-label="Chat with me">
+      @if (isOpen()) {
+        <span aria-hidden="true">✕</span>
+      } @else {
+        <span aria-hidden="true">💬</span>
+      }
+    </button>
+
+    <!-- Chat panel -->
+    @if (isOpen()) {
+      <section id="chat-panel" class="chat-panel" aria-label="Chat">
+        <header class="chat-head">
+          <div class="chat-head-text">
+            <strong>Chat with Yoseph</strong>
+            <span><span class="online-dot" aria-hidden="true"></span> Typically replies within a day</span>
+          </div>
+          <button type="button" class="chat-close" (click)="close()" aria-label="Close chat">
+            ✕
+          </button>
+        </header>
+
+        <div class="chat-messages">
+          @for (message of messages(); track message.id) {
+            <div
+              class="chat-bubble"
+              [class.chat-bubble--me]="isOwnMessage(message.author)">
+              <p class="chat-bubble-text">{{ message.text }}</p>
+              <time [attr.datetime]="message.sentAt">
+                {{ message.author === 'me' ? message.name.split(' ')[0] : (visitorName || 'You') }}
+                · {{ message.sentAt | date: 'h:mm a' }}
+              </time>
+            </div>
+          }
+        </div>
+
+        <form class="chat-form" (ngSubmit)="send()">
+          <input
+            type="text"
+            name="visitorName"
+            [(ngModel)]="visitorName"
+            placeholder="Your name"
+            aria-label="Your name"
+            class="chat-name" />
+          <div class="chat-input-row">
+            <input
+              type="text"
+              name="visitorMessage"
+              [(ngModel)]="draft"
+              placeholder="Type a message…"
+              aria-label="Message"
+              class="chat-input" />
+            <button
+              type="submit"
+              class="chat-send"
+              [disabled]="!draft.trim()"
+              aria-label="Send message">
+              ➤
+            </button>
+          </div>
+        </form>
+      </section>
+    }
+  </div>
+}

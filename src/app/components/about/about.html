@@ -1,21 +1,20 @@
 <section class="about">
   <div class="about-content">
-    <img src="/IMG_6828.JPG" alt="Yoseph Getachew photo" />
+    <img [src]="photo()" [alt]="profile().fullName + ' photo'" />
     <h2>About Me</h2>
-    <p>
-      Hello! I’m <strong>Yoseph Getachew</strong>, a passionate Full-Stack Developer with a knack for creating
-      scalable, efficient, and user-friendly applications. I specialize in Angular, Spring Boot, and Django,
-      and I enjoy solving complex problems with clean, maintainable code.
-    </p>
 
-    <p>
-      I thrive in collaborative environments where innovation and continuous learning are valued.
-      My goal is to deliver impactful software solutions that drive business success and improve user experiences.
-    </p>
+    @for (paragraph of profile().bio; track paragraph) {
+      <p>{{ paragraph }}</p>
+    }
 
-    <p>
-      When I’m not coding, I love exploring new technologies, contributing to open-source projects, and
-      enhancing my skills to stay at the forefront of the industry.
-    </p>
+    <div class="about-facts">
+      @for (fact of quickFacts(); track fact.label) {
+        <div class="fact">
+          <span class="fact-label">{{ fact.label }}</span>
+          <span class="fact-value">{{ fact.value }}</span>
+        </div>
+      }
+    </div>
   </div>
 </section>
+
